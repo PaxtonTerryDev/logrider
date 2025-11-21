@@ -1,0 +1,22 @@
+{
+  "name": "logrider",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "typescript",
+    "log",
+    "logging"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "An opinionated logging library for OOP based Typescript projects",
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
+  }
+}
