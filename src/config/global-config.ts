@@ -1,25 +1,29 @@
-import { LogLevel, Transport } from "../core/constants";
+import { LogLevel, Transport, type Colorable, type LogSegment, type LogSegmentConfig, type Toggleable } from "../core/constants";
 import _ from 'lodash'
 
-export interface TransportConfig {
-    enabled: boolean;
+export interface TransportConfig extends Toggleable, Colorable {}
+
+export interface LogLevelConfig extends Toggleable, Colorable {
+    segments?: Partial<Record<LogSegment, LogSegmentConfig>>;
 }
 
-export interface LogLevelConfig {
-    enabled: boolean;
+export interface LogRiderConfig extends Colorable {
+    colorEnabled?: boolean;
+    filter?: LogLevel;
+    transports?: Partial<Record<Partial<Transport>, Partial<TransportConfig>>>;
+    levels?: Partial<Record<Partial<LogLevel>, Partial<LogLevelConfig>>>;
 }
 
-export interface LogRiderConfig {
-    transports: Record<Transport, TransportConfig>;
-    levels: Record<LogLevel, LogLevelConfig>;
-}
-
-export interface LogRiderConfigOverride {
-    transports?: Partial<Record<Transport, TransportConfig>>;
-    levels?: Partial<Record<LogLevel, LogLevelConfig>>;
-}
+// TODO - Candidate for name refactor
+/**
+ * Defines a portion of a log.  
+ */
 
 export const defaultConfig: LogRiderConfig = {
+    filter: LogLevel.DEBUG,
+    colorEnabled: true,
+    color: "white",
+
     transports: {
         [Transport.STDOUT]: {
             enabled: true
@@ -34,36 +38,71 @@ export const defaultConfig: LogRiderConfig = {
     levels: {
         [LogLevel.TRACE]: {
             enabled: false,
+            color: "gray",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         },
         [LogLevel.DEBUG]: {
-            enabled: false,
+            enabled: true,
+            color: "cyan",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         },
         [LogLevel.INFO]: {
-            enabled: true
+            enabled: true,
+            color: "blue",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         },
         [LogLevel.WARN]: {
-            enabled: true
+            enabled: true,
+            color: "yellow",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         },
         [LogLevel.ERROR]: {
-            enabled: true
+            enabled: true,
+            color: "red",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         },
         [LogLevel.FATAL]: {
-            enabled: true
+            enabled: true,
+            color: "magenta",
+            segments: {
+                "message": {
+                    enabled: true,
+                }
+            }
         }
     },
-
 }
 
-export function mergeConfig(baseConfig: LogRiderConfig, inConfig: LogRiderConfigOverride): LogRiderConfig {
+export function mergeConfig(baseConfig: LogRiderConfig, inConfig: LogRiderConfig): LogRiderConfig {
     const copy = {...baseConfig};
     _.merge(copy, inConfig)
     return copy;
 }
 
-function overwriteDefaultConfig(inConfig: LogRiderConfigOverride): LogRiderConfig {
+function overwriteDefaultConfig(inConfig: LogRiderConfig): LogRiderConfig {
     return mergeConfig(defaultConfig, inConfig);
 }
 
-export function defineConfig(inConfig: LogRiderConfigOverride): LogRiderConfig {
+export function defineConfig(inConfig: LogRiderConfig): LogRiderConfig {
     return overwriteDefaultConfig(inConfig);
 }

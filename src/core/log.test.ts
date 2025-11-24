@@ -5,7 +5,7 @@ import { LogLevel } from "./constants";
 
 test('creates a log object from no provided overrides', async () => {
     await Log.init()
-    const log = new Log()
+    const log = new Log("TestLog")
     expect(isEqual(log.getConfig(), Log.getGlobalConfig()))
 
 })
@@ -21,8 +21,8 @@ test('creates a local config by merging provided config options with globalConfi
         }
     };
 
-    const log = new Log(override)
+    const log = new Log("TestLog", override)
 
-    expect(log.getConfig().levels[5].enabled).toBe(false);
-
+    expect(log.getConfig().levels![5]!.enabled).toBe(false);
 })
+

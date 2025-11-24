@@ -1,20 +1,24 @@
+import type { ColorName } from "chalk";
+
 export enum LogLevel {
-    TRACE,
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR,
-    FATAL
+    TRACE = 0,
+    DEBUG = 1,
+    INFO = 2,
+    WARN = 3,
+    ERROR = 4,
+    FATAL = 5
 }
 
-export const LOG_LEVEL_VALUES: Record<LogLevel, number> = {
-  [LogLevel.TRACE]: 0,
-  [LogLevel.DEBUG]: 1,
-  [LogLevel.INFO]: 2,
-  [LogLevel.WARN]: 3,
-  [LogLevel.ERROR]: 4,
-  [LogLevel.FATAL]: 5
-};
+export enum LogConfigGrain {
+  GLOBAL = 0,
+  PROJECT = 1,
+  INLINE = 2,
+}
+
+export enum ColorConfigGrain {
+  LEVEL,
+  SEGMENT,
+}
 
 export enum Transport {
     STDOUT,
@@ -22,4 +26,20 @@ export enum Transport {
     HTTPS
 }
 
+export type LogSegment = "timestamp" | "name" | "message"
+
+export interface LogSegmentConfig extends Toggleable, Colorable {}
+
 export type Format = "stdout" | "json"
+
+
+export interface Toggleable {
+    enabled?: boolean;
+}
+
+export interface Colorable {
+      /** Color is hierarchical.  More fine-grained definitions will override their parents. */
+    color?: ColorName;
+}
+
+export interface LogPortion extends Toggleable, Colorable {}

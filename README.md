@@ -42,3 +42,8 @@ You can override this config on a per instance basis as well -
 This will only apply to this instance of the Log class - 
 
 ## Configuration
+
+
+### Developer Note
+
+If you are looking at the source code, you'll notice that I am using the bang (non-null assertion, or "variableName!") This is most likely in reference to the config file. This is safe to do, as it applies the overrides sequentially from a default config.
