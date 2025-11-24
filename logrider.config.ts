@@ -1,4 +1,4 @@
-import { defineConfig } from "./src/core/config/global-config";
+import { defineConfig } from "./src/config/global-config";
 import { LogLevel, Transport } from "./src/core/constants";
 
 export default defineConfig({

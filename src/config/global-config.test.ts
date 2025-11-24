@@ -3,7 +3,7 @@ import {
   defineConfig,
   type LogRiderConfigOverride,
 } from "./global-config";
-import { LogLevel, Transport } from "../constants";
+import { LogLevel, Transport } from "../core/constants";
 
 const userConfigTest: LogRiderConfigOverride = {
   transports: {

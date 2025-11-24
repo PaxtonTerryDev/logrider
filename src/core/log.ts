@@ -1,5 +1,5 @@
-import { type LogRiderConfig, type LogRiderConfigOverride, defaultConfig, mergeConfig } from "./config/global-config";
-import { loadConfig } from "./config/loader";
+import { type LogRiderConfig, type LogRiderConfigOverride, defaultConfig, mergeConfig } from "../config/global-config";
+import { loadConfig } from "../config/loader";
 
 export default class Log {
     private static configPromise: Promise<LogRiderConfig> | null = null;

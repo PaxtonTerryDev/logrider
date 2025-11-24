@@ -1,4 +1,4 @@
-import { LogLevel, Transport } from "../constants";
+import { LogLevel, Transport } from "../core/constants";
 import _ from 'lodash'
 
 export interface TransportConfig {
