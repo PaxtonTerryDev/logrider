@@ -65,7 +65,7 @@ export default class Log {
     const localConfig = overrides
       ? _.merge({}, this.localConfig, { levels: { [level]: overrides } })
       : this.localConfig;
-    console.log(formatMessage(message, level, localConfig));
+    console.log(formatMessage(message, level, localConfig, this.name));
   }
 
   public trace(

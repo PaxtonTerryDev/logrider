@@ -10,6 +10,7 @@ export interface LogLevelConfig extends Toggleable, Colorable {
 export interface LogRiderConfig extends Colorable {
     colorEnabled?: boolean;
     filter?: LogLevel;
+    segments?: Partial<Record<LogSegment, LogSegmentConfig>>;
     transports?: Partial<Record<Partial<Transport>, Partial<TransportConfig>>>;
     levels?: Partial<Record<Partial<LogLevel>, Partial<LogLevelConfig>>>;
 }
@@ -23,6 +24,13 @@ export const defaultConfig: LogRiderConfig = {
     filter: LogLevel.DEBUG,
     colorEnabled: true,
     color: "white",
+
+    segments: {
+        timestamp: { enabled: true, color: "gray" },
+        name: { enabled: true, color: "cyan" },
+        level: { enabled: true },
+        message: { enabled: true }
+    },
 
     transports: {
         [Transport.STDOUT]: {
@@ -40,54 +48,44 @@ export const defaultConfig: LogRiderConfig = {
             enabled: false,
             color: "gray",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                timestamp: { enabled: true },
+                level: { enabled: true }
             }
         },
         [LogLevel.DEBUG]: {
             enabled: true,
             color: "cyan",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                level: { enabled: true }
             }
         },
         [LogLevel.INFO]: {
             enabled: true,
             color: "blue",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                timestamp: { enabled: false },
+                level: { enabled: false }
             }
         },
         [LogLevel.WARN]: {
             enabled: true,
             color: "yellow",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                level: { enabled: true, color: "bgYellow" }
             }
         },
         [LogLevel.ERROR]: {
             enabled: true,
             color: "red",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                level: { enabled: true, color: "bgRed" }
             }
         },
         [LogLevel.FATAL]: {
             enabled: true,
             color: "magenta",
             segments: {
-                "message": {
-                    enabled: true,
-                }
+                level: { enabled: true, color: "bgMagenta" }
             }
         }
     },

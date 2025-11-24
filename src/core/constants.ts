@@ -26,7 +26,7 @@ export enum Transport {
     HTTPS
 }
 
-export type LogSegment = "timestamp" | "name" | "message"
+export type LogSegment = "timestamp" | "name" | "level" | "message"
 
 export interface LogSegmentConfig extends Toggleable, Colorable {}
 

@@ -1,6 +1,30 @@
+import type { ColorName } from "chalk";
 import type { LogRiderConfig } from "../../../config/global-config";
-import type { LogSegment } from "../../constants";
+import type { LogLevel, LogSegment } from "../../constants";
+import { getColorForSegment } from "../color/get-color-config";
 
-export type SegmentInclude = Record<LogSegment, boolean>;
+export function isSegmentEnabled(
+    config: LogRiderConfig,
+    level: LogLevel,
+    segment: LogSegment
+): boolean {
+    const levelSegmentEnabled = config.levels?.[level]?.segments?.[segment]?.enabled;
+    if (levelSegmentEnabled !== undefined) {
+        return levelSegmentEnabled;
+    }
 
-export function getSegmentInclude(config: LogRiderConfig, )
+    const rootSegmentEnabled = config.segments?.[segment]?.enabled;
+    if (rootSegmentEnabled !== undefined) {
+        return rootSegmentEnabled;
+    }
+
+    return true;
+}
+
+export function getSegmentColor(
+    config: LogRiderConfig,
+    level: LogLevel,
+    segment: LogSegment
+): ColorName | undefined {
+    return getColorForSegment(config, level, segment);
+}
